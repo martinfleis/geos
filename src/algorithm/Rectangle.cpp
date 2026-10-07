@@ -106,15 +106,19 @@ Rectangle::createLineForStandardEquation(double a, double b, double c)
     * This handles lines that are vertical (b = 0, m = Inf )
     * and horizontal (a = 0, m = 0).
     */
-    if (std::abs(b) > std::abs(a)) {
+    const bool useX = std::abs(b) > std::abs(a);
+    const double d = useX ? b : a;
+    const double cd = c / d;
+    const double od = (useX ? a : b) / d;
+    if (useX) {
         //-- abs(m) < 1
-        p0 = Coordinate(0.0, c/b);
-        p1 = Coordinate(1.0, c/b - a/b);
+        p0 = Coordinate(0.0, cd);
+        p1 = Coordinate(1.0, cd - od);
     }
     else {
         //-- abs(m) >= 1
-        p0 = Coordinate(c/a, 0.0);
-        p1 = Coordinate(c/a - b/a, 1.0);
+        p0 = Coordinate(cd, 0.0);
+        p1 = Coordinate(cd - od, 1.0);
     }
     return LineSegment(p0, p1);
 }

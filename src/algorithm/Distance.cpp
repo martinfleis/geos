@@ -94,10 +94,9 @@ Distance::pointToLinePerpendicular(const geom::CoordinateXY& p,
             Then the distance from C to P = |s|*L.
     */
 
-    double s = ((A.y - p.y) * (B.x - A.x) - (A.x - p.x) * (B.y - A.y))
-               /
-               ((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));
-    return std::fabs(s) * std::sqrt(((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y)));
+    double num = (A.y - p.y) * (B.x - A.x) - (A.x - p.x) * (B.y - A.y);
+    double len2 = (B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y);
+    return (std::fabs(num) / len2) * std::sqrt(len2);
 }
 
 /*public static*/
@@ -217,10 +216,9 @@ Distance::pointToLinePerpendicularSigned(
      * Then the distance from C to P = |s|*L.
      */
     double len2 = (B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y);
-    double s = ((A.y - p.y) * (B.x - A.x) - (A.x - p.x) * (B.y - A.y))
-        / len2;
+    double num = (A.y - p.y) * (B.x - A.x) - (A.x - p.x) * (B.y - A.y);
 
-    return s * std::sqrt(len2);
+    return (num / len2) * std::sqrt(len2);
 }
 
 
